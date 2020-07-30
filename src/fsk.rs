@@ -99,7 +99,7 @@ where
 
         self.mode = Mode::FskOok;
         self.config.modem = Modem::FskOok(config.clone());
-        self.config.channel = Channel::FskOok(channel.clone());
+        self.config.channel = Channel::FskOok(*channel);
 
         Ok(())
     }

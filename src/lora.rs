@@ -24,8 +24,8 @@ where
         debug!("Configuring lora mode");
 
         // Update internal config
-        self.config.channel = Channel::LoRa(channel.clone());
-        self.config.modem = Modem::LoRa(config.clone());
+        self.config.channel = Channel::LoRa(*channel);
+        self.config.modem = Modem::LoRa(*config);
 
         // Switch to sleep to change modem mode
         self.set_state(State::Sleep)?;
@@ -62,8 +62,8 @@ where
         }
 
         self.mode = Mode::LoRa;
-        self.config.modem = Modem::LoRa(config.clone());
-        self.config.channel = Channel::LoRa(channel.clone());
+        self.config.modem = Modem::LoRa(*config);
+        self.config.channel = Channel::LoRa(*channel);
 
         Ok(())
     }
@@ -203,7 +203,7 @@ where
         }
 
         // Update internal channel state
-        self.config.channel = Channel::LoRa(channel.clone());
+        self.config.channel = Channel::LoRa(*channel);
 
         Ok(())
     }

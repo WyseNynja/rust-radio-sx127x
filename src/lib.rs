@@ -332,7 +332,7 @@ where
         let outgoing = [
             (channel >> 16) as u8,
             (channel >> 8) as u8,
-            (channel >> 0) as u8,
+            channel as u8,
         ];
 
         debug!("Set channel to index: {:?} (freq: {:?})", channel, freq);
@@ -348,7 +348,7 @@ where
 
         self.hal
             .read_regs(regs::Common::FRFMSB as u8, &mut incoming)?;
-        let ch = (incoming[0] as u32) << 16 | (incoming[1] as u32) << 8 | (incoming[2] as u32) << 0;
+        let ch = (incoming[0] as u32) << 16 | (incoming[1] as u32) << 8 | (incoming[2] as u32);
 
         let freq = self.channel_index_to_freq(ch);
 

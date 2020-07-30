@@ -34,13 +34,13 @@ pub trait Base<CommsError, PinError> {
     /// Read a single u8 value from the specified register
     fn read_reg(&mut self, reg: u8) -> Result<u8, Error<CommsError, PinError>> {
         let mut incoming = [0u8; 1];
-        self.read_regs(reg.into(), &mut incoming)?;
+        self.read_regs(reg, &mut incoming)?;
         Ok(incoming[0])
     }
 
     /// Write a single u8 value to the specified register
     fn write_reg(&mut self, reg: u8, value: u8) -> Result<(), Error<CommsError, PinError>> {
-        self.write_regs(reg.into(), &[value])?;
+        self.write_regs(reg, &[value])?;
         Ok(())
     }
 
@@ -68,9 +68,9 @@ where
 {
     /// Reset the radio
     fn reset(&mut self) -> Result<(), Error<CommsError, PinError>> {
-        self.set_reset(PinState::Low).map_err(|e| Error::from(e))?;
+        self.set_reset(PinState::Low).map_err(Error::from)?;
         self.delay_ms(1);
-        self.set_reset(PinState::High).map_err(|e| Error::from(e))?;
+        self.set_reset(PinState::High).map_err(Error::from)?;
         self.delay_ms(10);
 
         Ok(())
@@ -116,7 +116,7 @@ where
     /// Write to the specified buffer
     fn write_buff(&mut self, data: &[u8]) -> Result<(), Error<CommsError, PinError>> {
         // Setup fifo buffer write
-        let out_buf: [u8; 1] = [0x00 | 0x80];
+        let out_buf: [u8; 1] = [0x80];
         self.wait_busy()?;
         let r = self.spi_write(&out_buf, data).map_err(|e| e.into());
         self.wait_busy()?;

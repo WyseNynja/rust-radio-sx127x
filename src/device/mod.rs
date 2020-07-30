@@ -226,7 +226,7 @@ pub struct TxConfig {
 }
 
 /// Device frequency step
-pub const FREQ_STEP: f32 = 61.03515625;
+pub const FREQ_STEP: f32 = 61.035_156;
 
 pub const RX_BUFFER_SIZE: u32 = 256;
 
